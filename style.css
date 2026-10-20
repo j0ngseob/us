@@ -1,0 +1,6390 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* База */
+  --bg: #f5f1f1;
+  --bg-elevated: #ffffff;
+  --text: #40434e;
+  --text-soft: #8b8d96;
+  --text-faint: #b4b6bd;
+
+  /* Поверхности */
+  --surface: rgba(64, 67, 78, 0.05);
+  --surface-hover: rgba(64, 67, 78, 0.08);
+  --input-bg: rgba(64, 67, 78, 0.04);
+
+  /* Границы */
+  --border: rgba(64, 67, 78, 0.06);
+  --border-strong: rgba(64, 67, 78, 0.1);
+
+  /* Акцент */
+  --accent: #7a9c81;
+  --accent-soft: #c5d0c5;
+
+  /* Пастельные акценты (для аватарок и т.п.) */
+  --blue: #c7d9e2;
+  --yellow: #e8d99e;
+  --pink: #e2cece;
+  --sage: #c5d0c5;
+
+  /* Сообщения */
+  --incoming: #f0ebe4;
+  --outgoing: #e4ece6;
+
+  /* Оверлеи и тени */
+  --overlay: rgba(64, 67, 78, 0.35);
+  --modal-shadow: rgba(64, 67, 78, 0.15);
+  --shadow-card: 0 1px 2px rgba(64, 67, 78, 0.04), 0 6px 20px rgba(64, 67, 78, 0.05);
+
+  /* Прочее */
+  --card-text: rgba(64, 67, 78, 0.55);
+}
+
+body.dark {
+  --bg: #23252c;              /* не чёрный, а графитовый */
+  --bg-elevated: #2c2e36;     /* карточки чуть светлее */
+  --text: #ece8e2;            /* тёплый почти белый */
+  --text-soft: #9a9ca5;       /* мягкий серый */
+  --text-faint: #6b6d76;
+
+  --surface: rgba(236, 232, 226, 0.06);
+  --surface-hover: rgba(236, 232, 226, 0.1);
+  --input-bg: rgba(236, 232, 226, 0.05);
+
+  --border: rgba(236, 232, 226, 0.08);
+  --border-strong: rgba(236, 232, 226, 0.12);
+
+  --accent: #a5c4a8;
+  --accent-soft: #4a5a4e;
+
+  --blue: #a8bdcd;
+  --yellow: #c9bb82;
+  --pink: #c4b0b0;
+  --sage: #a8b6a8;
+
+  --incoming: #2c2e36;
+  --outgoing: #35403a;
+
+  --overlay: rgba(0, 0, 0, 0.6);
+  --modal-shadow: rgba(0, 0, 0, 0.5);
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.25), 0 6px 20px rgba(0, 0, 0, 0.3);
+
+  --card-text: rgba(236, 232, 226, 0.6);
+}
+
+body {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "SF Pro Display",
+    "SF Pro Text",
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+/* =================================
+APP
+================================= */
+
+.app {
+  width: 430px;
+  height: 850px;
+  background: var(--bg);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border-radius: 40px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 35px 90px rgba(0, 0, 0, 0.14);
+  border: 1px solid var(--border-strong);
+  transition: background 0.25s ease;
+}
+
+/* =================================
+MAIN SCREENS
+================================= */
+
+.main-screens {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+  z-index: 1;
+  transition: background 0.25s ease;
+}
+
+.main-screens > section {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 72px;      
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 1;
+}
+
+.main-screens > section.active {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 2;
+}
+
+.main-screens > section.active {
+  display: flex;
+}
+
+/* =================================
+HOME
+================================= */
+
+.home-screen {
+  padding: 26px 22px 0;
+}
+
+.home-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-size: 28px;
+  font-weight: 650;
+  letter-spacing: -1.5px;
+  color: var(--text);
+}
+
+.logo span {
+  color: #9baa9e;
+}
+
+.subtitle {
+  margin-top: 2px;
+  font-size: 11px;
+  color: var(--text-soft);
+  letter-spacing: 0.2px;
+}
+
+/* Greeting */
+
+.greeting {
+  margin-top: 46px;
+}
+
+.eyebrow {
+  font-size: 10px;
+  letter-spacing: 1.2px;
+  color: var(--text-soft);
+}
+
+.greeting h1 {
+  margin-top: 12px;
+  font-size: 35px;
+  line-height: 1.02;
+  letter-spacing: -1.8px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+/* People */
+
+.people-section {
+  margin-top: 35px;
+}
+
+.section-label {
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--text-soft);
+  margin-bottom: 12px;
+}
+
+.people-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.person-card {
+  height: 145px;
+  border-radius: 25px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.person-rina {
+  background: var(--blue);
+}
+
+.person-vika {
+  background: var(--yellow);
+}
+
+.person-third {
+  background: var(--pink);
+}
+
+.big-avatar {
+  width: 39px;
+  height: 39px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.45);
+  font-size: 13px;
+  color: rgba(23, 23, 20, 0.85);
+}
+
+.person-card-name {
+  font-size: 15px;
+  font-weight: 550;
+  color: rgba(23, 23, 20, 0.92);
+}
+
+.person-card-status {
+  font-size: 9px;
+  color: var(--card-text);
+}
+
+body.dark .person-card-name {
+  color: rgba(23, 23, 20, 1);
+}
+
+body.dark .person-card-status {
+  color: rgba(23, 23, 20, 0.75);
+  font-weight: 500;
+}
+/* Mood */
+
+.mood-card {
+  margin-top: 10px;
+  padding: 17px;
+  background: var(--bg-elevated);
+  border-radius: 25px;
+  border: 1px solid var(--border);
+  transition: background 0.25s ease;
+  cursor: pointer;
+}
+
+.mood-card:hover {
+  transform: translateY(-1px);
+}
+
+.mood-card:active {
+  transform: translateY(0);
+}
+
+.mood-top {
+  display: flex;
+  justify-content: space-between;
+  color: var(--text-soft);
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+
+.mood-edit-hint {
+  color: var(--text-soft);
+  font-size: 12px;
+  transition: color 0.15s ease;
+}
+
+.mood-card:hover .mood-edit-hint {
+  color: var(--text);
+}
+
+.mood-content {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-top: 13px;
+}
+
+.mood-icon {
+  width: 39px;
+  height: 39px;
+  border-radius: 50%;
+  background: var(--yellow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: rgba(23, 23, 20, 0.8);
+}
+
+.mood-title {
+  font-size: 13px;
+  line-height: 1.25;
+  color: var(--text);
+}
+
+.mood-title.empty {
+  color: var(--text-soft);
+  font-style: italic;
+}
+
+.mood-author {
+  margin-top: 4px;
+  font-size: 10px;
+  color: var(--text-soft);
+}
+
+/* =================================
+MEETUP CARD
+================================= */
+
+.meetup-card {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  padding: 20px 22px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 25px;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.25s ease;
+}
+
+.meetup-card:hover {
+  transform: translateY(-1px);
+}
+
+.meetup-card:active {
+  transform: translateY(0);
+}
+
+.meetup-top {
+  display: flex;
+  justify-content: space-between;
+  color: var(--text-soft);
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+
+.meetup-edit-hint {
+  font-size: 12px;
+  transition: color 0.15s ease;
+}
+
+.meetup-card:hover .meetup-edit-hint {
+  color: var(--text);
+}
+
+.meetup-content {
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.meetup-countdown {
+  font-size: 34px;
+  font-weight: 600;
+  letter-spacing: -1.8px;
+  color: var(--text);
+  line-height: 1;
+  flex-shrink: 0;
+  min-width: 90px;
+}
+
+.meetup-countdown.empty {
+  font-size: 26px;
+  color: var(--text-soft);
+}
+
+.meetup-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.meetup-title {
+  font-size: 14px;
+  font-weight: 550;
+  color: var(--text);
+  line-height: 1.25;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.meetup-date {
+  margin-top: 4px;
+  font-size: 11px;
+  color: var(--text-soft);
+}
+
+/* =================================
+BOTTOM NAV
+================================= */
+
+.bottom-nav {
+  margin-top: auto;
+  height: 72px;
+  flex-shrink: 0;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+.nav-item {
+  border: none;
+  background: transparent;
+  color: var(--text-soft);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  font-family: inherit;
+  font-size: 9px;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.nav-item.active {
+  color: var(--text);
+}
+
+.nav-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+}
+
+.nav-icon svg {
+  display: block;
+}
+
+/* =================================
+MOMENTS / ME — заголовки
+================================= */
+
+.page-header {
+  padding: 26px 22px 8px;
+  flex-shrink: 0;
+}
+
+.page-title {
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -1.2px;
+  color: var(--text);
+}
+
+.empty-state {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 30px;
+  text-align: center;
+  color: var(--text-soft);
+}
+
+.empty-icon {
+  color: var(--text-soft);
+  margin-bottom: 18px;
+}
+
+.empty-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 8px;
+  letter-spacing: -0.2px;
+}
+
+.empty-subtitle {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-soft);
+  max-width: 240px;
+}
+
+/* =================================
+ME — ПРОФИЛЬ
+================================= */
+
+.profile-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 22px 20px;
+}
+
+.profile-avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: var(--blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 34px;
+  font-weight: 600;
+  color: rgba(23, 23, 20, 0.72);
+}
+
+.profile-name {
+  margin-top: 14px;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.4px;
+  color: var(--text);
+}
+
+.profile-actions {
+  padding: 8px 22px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.profile-action {
+  width: 100%;
+  height: 52px;
+  border: none;
+  border-radius: 16px;
+  background: var(--surface);
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 18px;
+  transition: background 0.15s ease;
+  text-align: left;
+}
+
+.profile-action:hover {
+  background: var(--surface-hover);
+}
+
+.profile-action svg {
+  color: var(--text-soft);
+  flex-shrink: 0;
+}
+
+#logout-button {
+  color: #a35a5a;
+}
+
+#logout-button svg {
+  color: #a35a5a;
+}
+
+body.dark #logout-button {
+  color: #d48484;
+}
+
+body.dark #logout-button svg {
+  color: #d48484;
+}
+
+/* Иконки темы */
+
+.theme-icon-moon {
+  display: block;
+}
+
+.theme-icon-sun {
+  display: none;
+}
+
+body.dark .theme-icon-moon {
+  display: none;
+}
+
+body.dark .theme-icon-sun {
+  display: block;
+}
+
+/* =================================
+МОДАЛКИ: ОБЩЕЕ
+================================= */
+
+.mood-modal,
+.nickname-modal,
+.meetup-modal,
+.diary-modal,
+.confirm-modal,
+.entry-actions-sheet {
+  position: fixed;
+  inset: 0;
+  background: var(--overlay);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease;
+  z-index: 200;
+}
+
+.mood-modal.open,
+.nickname-modal.open,
+.meetup-modal.open,
+.diary-modal.open,
+.confirm-modal.open,
+.entry-actions-sheet.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mood-modal-content,
+.nickname-modal-content,
+.meetup-modal-content,
+.diary-modal-content,
+.confirm-modal-content {
+  width: 100%;
+  max-width: 340px;
+  background: var(--bg);
+  border-radius: 26px;
+  padding: 24px;
+  box-shadow: 0 25px 60px var(--modal-shadow);
+  transform: scale(0.96);
+  transition: transform 0.18s ease, background 0.25s ease;
+}
+
+.mood-modal.open .mood-modal-content,
+.nickname-modal.open .nickname-modal-content,
+.meetup-modal.open .meetup-modal-content,
+.diary-modal.open .diary-modal-content,
+.confirm-modal.open .confirm-modal-content {
+  transform: scale(1);
+}
+
+.mood-modal-title,
+.nickname-modal-title,
+.meetup-modal-title,
+.diary-modal-title,
+.confirm-modal-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  letter-spacing: -0.2px;
+  color: var(--text);
+}
+
+.mood-error,
+.nickname-error,
+.meetup-modal-error,
+.diary-modal-error {
+  margin-top: 8px;
+  font-size: 11px;
+  color: #b36969;
+  height: 14px;
+}
+
+.mood-modal-actions,
+.nickname-modal-actions,
+.meetup-modal-actions,
+.diary-modal-actions,
+.confirm-modal-actions {
+  margin-top: 16px;
+  display: flex;
+  gap: 8px;
+}
+
+.mood-cancel,
+.mood-save,
+.nickname-cancel,
+.nickname-save,
+.meetup-cancel,
+.meetup-save,
+.diary-cancel,
+.diary-save,
+.confirm-cancel,
+.confirm-delete {
+  flex: 1;
+  height: 44px;
+  border: none;
+  border-radius: 14px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.mood-cancel,
+.nickname-cancel,
+.meetup-cancel,
+.diary-cancel,
+.confirm-cancel {
+  background: var(--surface);
+  color: var(--text);
+}
+
+.mood-cancel:hover,
+.nickname-cancel:hover,
+.meetup-cancel:hover,
+.diary-cancel:hover,
+.confirm-cancel:hover {
+  background: var(--surface-hover);
+}
+
+.mood-save,
+.nickname-save,
+.meetup-save,
+.diary-save {
+  background: var(--accent);
+color: #ffffff;
+}
+
+.mood-save:hover,
+.nickname-save:hover,
+.meetup-save:hover,
+.diary-save:hover {
+  background: #9cad9f;
+}
+
+.confirm-delete {
+  background: #b36969;
+  color: #ffffff;
+}
+
+.confirm-delete:hover {
+  background: #a35a5a;
+}
+
+/* Текстареи и инпуты в модалках */
+
+.mood-textarea,
+.nickname-input,
+.diary-textarea,
+.meetup-input-title,
+.meetup-input-date {
+  width: 100%;
+  border-radius: 14px;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-elevated);
+  padding: 12px 14px;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.15s ease, background 0.25s ease;
+}
+
+.mood-textarea {
+  min-height: 80px;
+  resize: none;
+  line-height: 1.4;
+}
+
+.diary-textarea {
+  min-height: 140px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.nickname-input,
+.meetup-input-title,
+.meetup-input-date {
+  height: 46px;
+  padding: 0 16px;
+}
+
+.mood-textarea:focus,
+.nickname-input:focus,
+.diary-textarea:focus,
+.meetup-input-title:focus,
+.meetup-input-date:focus {
+  border-color: #9baa9e;
+}
+
+.mood-counter,
+.diary-counter {
+  margin-top: 6px;
+  font-size: 10px;
+  color: var(--text-soft);
+  text-align: right;
+}
+
+.confirm-modal-text {
+  font-size: 13px;
+  color: var(--text-soft);
+  line-height: 1.4;
+  margin-bottom: 20px;
+}
+
+.meetup-input-title {
+  margin-bottom: 10px;
+}
+
+/* =================================
+ENTRY ACTIONS SHEET
+================================= */
+
+.entry-actions-sheet {
+  align-items: flex-end;
+  padding: 20px;
+}
+
+.entry-actions-content {
+  width: 100%;
+  max-width: 380px;
+  background: var(--bg);
+  border-radius: 26px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transform: translateY(20px);
+  transition: transform 0.22s ease, background 0.25s ease;
+  margin-bottom: 10px;
+}
+
+.entry-actions-sheet.open .entry-actions-content {
+  transform: translateY(0);
+}
+
+.entry-action {
+  width: 100%;
+  height: 52px;
+  border: none;
+  border-radius: 16px;
+  background: transparent;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 18px;
+  transition: background 0.15s ease;
+  text-align: left;
+}
+
+.entry-action:hover {
+  background: var(--surface-hover);
+}
+
+.entry-action svg {
+  color: var(--text-soft);
+  flex-shrink: 0;
+}
+
+.entry-action-danger {
+  color: #a35a5a;
+}
+
+.entry-action-danger svg {
+  color: #a35a5a;
+}
+
+body.dark .entry-action-danger {
+  color: #d48484;
+}
+
+body.dark .entry-action-danger svg {
+  color: #d48484;
+}
+
+.entry-action-cancel {
+  justify-content: center;
+  margin-top: 4px;
+  border-top: 1px solid var(--border);
+  border-radius: 0 0 16px 16px;
+  color: var(--text-soft);
+}
+
+.entry-action-cancel:hover {
+  color: var(--text);
+}
+
+/* =================================
+CHAT SCREEN
+================================= */
+
+.chat-screen,
+.diary-screen {
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  display: none;
+  flex-direction: column;
+  z-index: 5;
+  transition: background 0.25s ease;
+}
+
+.diary-screen {
+  z-index: 6;
+}
+
+.chat-header {
+  height: 86px;
+  padding: 25px 18px 12px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  transition: border-color 0.25s ease;
+}
+
+.back-button,
+.more-button,
+.diary-back-button,
+.diary-add-button {
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  color: var(--text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.15s ease;
+}
+
+.diary-back-button:hover,
+.diary-add-button:hover {
+  background: var(--surface);
+}
+
+.chat-header-info {
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 6px 8px;
+  border-radius: 12px;
+  transition: background 0.15s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  overflow: hidden;
+  margin-right: 40px;
+}
+
+.chat-header-info:hover {
+  background: var(--surface-hover);
+}
+
+.chat-header-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chat-header-members {
+  font-size: 10px;
+  color: var(--text-soft);
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Messages */
+
+.messages {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(128, 128, 128, 0.3) transparent;
+}
+
+.messages::-webkit-scrollbar,
+.diary-entries::-webkit-scrollbar {
+  width: 6px;
+}
+
+.messages::-webkit-scrollbar-track,
+.diary-entries::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.messages::-webkit-scrollbar-thumb,
+.diary-entries::-webkit-scrollbar-thumb {
+  background: rgba(128, 128, 128, 0.25);
+  border-radius: 3px;
+}
+
+.messages::-webkit-scrollbar-thumb:hover,
+.diary-entries::-webkit-scrollbar-thumb:hover {
+  background: rgba(128, 128, 128, 0.4);
+}
+
+.chat-date {
+  text-align: center;
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: var(--text-soft);
+  margin-bottom: 7px;
+}
+
+.message-row {
+  margin-top: 13px;
+  display: flex;
+  gap: 9px;
+  align-items: flex-end;
+  position: relative;
+}
+
+.message-row.own {
+  justify-content: flex-end;
+}
+
+.message-avatar {
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  color: rgba(23, 23, 20, 0.85);
+}
+
+.message-content {
+  max-width: 72%;
+}
+
+.message-name {
+  font-size: 10px;
+  color: var(--text-soft);
+  margin-bottom: 4px;
+}
+
+.message-bubble {
+  padding: 11px 14px;
+  font-size: 14px;
+  line-height: 1.35;
+  border-radius: 18px;
+  color: var(--text);
+  transition: background 0.25s ease;
+}
+
+.incoming {
+  background: var(--incoming);
+  border-bottom-left-radius: 5px;
+}
+
+.outgoing {
+  background: var(--outgoing);
+  border-bottom-right-radius: 5px;
+}
+
+.message-meta {
+  margin-top: 4px;
+  padding: 0 4px;
+  font-size: 9px;
+  color: var(--text-soft);
+}
+
+.own .message-meta {
+  text-align: right;
+}
+
+/* Composer */
+
+.composer {
+  min-height: 76px;
+  padding: 11px 14px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  border-top: 1px solid var(--border);
+  transition: border-color 0.25s ease;
+}
+
+.plus-button,
+.send-button,
+.emoji-button {
+  width: 41px;
+  height: 41px;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.plus-button {
+  background: var(--surface);
+  color: var(--text-soft);
+  font-size: 20px;
+  transition: transform 0.2s ease, background 0.25s ease, color 0.25s ease;
+}
+
+.plus-button.active {
+  transform: rotate(45deg);
+  background: var(--sage);
+  color: var(--text);
+}
+
+.emoji-button {
+  background: transparent;
+  color: var(--text-soft);
+  font-size: 17px;
+}
+
+.send-button {
+  background: #a9b8ad;
+  color: #20231f;
+  font-size: 18px;
+  transition: opacity 0.15s ease, transform 0.1s ease;
+  opacity: 0.5;
+}
+
+.send-button.ready {
+  opacity: 1;
+}
+
+.send-button:active.ready {
+  transform: scale(0.94);
+}
+
+.input {
+  flex: 1;
+  height: 43px;
+  background: var(--input-bg);
+  border-radius: 17px;
+  display: flex;
+  align-items: center;
+  padding-left: 14px;
+  transition: background 0.25s ease;
+}
+
+.input input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.input input::placeholder {
+  color: var(--text-soft);
+}
+
+/* =================================
+ATTACHMENT MENU
+================================= */
+
+.attachment-wrap {
+  position: relative;
+}
+
+.attachment-menu {
+  position: absolute;
+  bottom: 58px;
+  left: 0;
+  width: 155px;
+  padding: 8px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-strong);
+  border-radius: 20px;
+  box-shadow: 0 12px 30px var(--modal-shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  opacity: 0;
+  transform: translateY(8px) scale(0.96);
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease, background 0.25s ease;
+}
+
+.attachment-menu.open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.attachment-item {
+  border: none;
+  background: transparent;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 11px;
+  border-radius: 13px;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.attachment-item:hover {
+  background: var(--surface-hover);
+}
+
+.attachment-icon {
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+}
+
+/* =================================
+TYPING INDICATOR
+================================= */
+
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 4px 18px 12px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.typing-indicator.visible {
+  opacity: 1;
+}
+
+.typing-avatar {
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  background: var(--pink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(23, 23, 20, 0.85);
+}
+
+.typing-text {
+  font-size: 12px;
+  color: var(--text-soft);
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.typing-dots {
+  display: inline-flex;
+  gap: 2px;
+  margin-left: 2px;
+}
+
+.typing-dots span {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--text-soft);
+  animation: typingDot 1.2s infinite ease-in-out;
+}
+
+.typing-dots span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.typing-dots span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes typingDot {
+  0%, 60%, 100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  30% {
+    transform: translateY(-3px);
+    opacity: 1;
+  }
+}
+
+/* =================================
+MESSAGE REACTIONS
+================================= */
+
+.message-reaction {
+  width: 26px;
+  height: 21px;
+  margin-top: 4px;
+  padding: 0;
+  border: 1px solid var(--border-strong);
+  border-radius: 12px;
+  background: var(--bg-elevated);
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text);
+  transition: background 0.25s ease;
+}
+
+.message-reaction.active {
+  background: var(--pink);
+}
+
+.reaction-bubble {
+  align-self: flex-end;
+  margin-top: -4px;
+  margin-right: 3px;
+  padding: 6px 10px;
+  border-radius: 14px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  font-size: 11px;
+  color: var(--text);
+}
+
+/* =================================
+CHAT PHOTOS
+================================= */
+
+.chat-photo {
+  display: block;
+  width: 220px;
+  max-width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 18px;
+  box-shadow: 0 5px 18px rgba(23, 23, 20, 0.08);
+  cursor: pointer;
+}
+
+/* =================================
+PHOTO VIEWER
+================================= */
+
+.photo-viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(15px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.photo-viewer.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.photo-viewer-image {
+  max-width: 90%;
+  max-height: 82%;
+  object-fit: contain;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  transform: scale(0.96);
+  transition: transform 0.2s ease;
+}
+
+.photo-viewer.open .photo-viewer-image {
+  transform: scale(1);
+}
+
+.photo-viewer-close {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  font-size: 25px;
+  font-weight: 300;
+  cursor: pointer;
+}
+
+/* =================================
+DIARY ENTRIES
+================================= */
+
+.diary-entries {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(128, 128, 128, 0.3) transparent;
+}
+
+.diary-empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 30px;
+  text-align: center;
+  color: var(--text-soft);
+}
+
+.diary-empty .empty-icon {
+  color: var(--text-soft);
+  margin-bottom: 18px;
+}
+
+.diary-empty strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.diary-date-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 12px 0 4px;
+  font-size: 9px;
+  letter-spacing: 1.2px;
+  color: var(--text-soft);
+  text-transform: uppercase;
+}
+
+.diary-date-divider::before,
+.diary-date-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.diary-date-divider span {
+  padding: 0 2px;
+}
+
+.diary-entry {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 16px 18px;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease, border-color 0.25s ease;
+}
+
+.diary-entry:hover {
+  background: var(--surface-hover);
+}
+
+.diary-entry:active {
+  transform: scale(0.995);
+}
+
+.diary-entry-text {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text);
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.diary-entry-meta {
+  margin-top: 10px;
+  font-size: 10px;
+  color: var(--text-soft);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.diary-entry-edited {
+  font-style: italic;
+  color: var(--text-soft);
+  font-size: 9px;
+}
+
+.diary-loading {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-soft);
+  padding: 40px 20px;
+}
+
+/* =================================
+LOGIN SCREEN
+================================= */
+
+.login-screen {
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 30px;
+  z-index: 10;
+  transition: background 0.25s ease;
+}
+
+.login-logo {
+  font-size: 54px;
+  font-weight: 650;
+  letter-spacing: -3px;
+  color: var(--text);
+}
+
+.login-logo span {
+  color: #9baa9e;
+}
+
+.login-subtitle {
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--text-soft);
+  letter-spacing: 0.3px;
+}
+
+
+.login-user:hover {
+  transform: translateY(-3px);
+  background: var(--surface-hover);
+}
+
+.avatar-r {
+  background: #bcd5e1;
+}
+
+.avatar-v {
+  background: #e5d38d;
+}
+
+.avatar-a {
+  background: #dec5c5;
+}
+
+
+.login-submit:hover {
+  background: #9cad9f;
+}
+
+.login-cancel:hover {
+  color: var(--text);
+}
+
+/* =================================
+MOBILE
+================================= */
+
+@media (max-width: 600px) {
+  body {
+    background: var(--bg);
+  }
+
+  .app {
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
+  }
+}
+/* ================================
+NAV BADGE (непрочитанные)
+================================ */
+
+.nav-icon {
+  position: relative;
+}
+
+.nav-badge {
+  position: absolute;
+  top: -4px;
+  right: -8px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 5px;
+  border-radius: 8px;
+  background: #c96a6a;
+  color: #ffffff;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.nav-badge.visible {
+  display: flex;
+}
+
+.nav-badge.visible::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  background: #c96a6a;
+  animation: badgePulse 2s ease-in-out infinite;
+  z-index: -1;
+  opacity: 0.4;
+}
+
+@keyframes badgePulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.4;
+  }
+  50% {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+}
+
+/* ================================
+REPLY BAR (над composer)
+================================ */
+
+.reply-bar {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 14px;
+  margin: 0 14px;
+  margin-bottom: 0;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-strong);
+  border-bottom: none;
+  border-radius: 14px 14px 0 0;
+}
+
+.reply-bar.open {
+  display: flex;
+}
+
+.reply-bar-content {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+
+.reply-bar-line {
+  width: 3px;
+  background: #a9b8ad;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.reply-bar-info {
+  min-width: 0;
+  flex: 1;
+}
+
+.reply-bar-name {
+  font-size: 11px;
+  font-weight: 600;
+  color: #7a9c81;
+  margin-bottom: 2px;
+}
+
+.reply-bar-text {
+  font-size: 12px;
+  color: var(--text-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.reply-bar-close {
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  color: var(--text-soft);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.15s ease, color 0.15s ease;
+  flex-shrink: 0;
+}
+
+.reply-bar-close:hover {
+  background: var(--surface-hover);
+  color: var(--text);
+}
+
+/* ================================
+REPLY QUOTE (внутри сообщения)
+================================ */
+
+.message-reply-quote {
+  padding: 6px 10px;
+  margin-bottom: 6px;
+  background: rgba(0, 0, 0, 0.05);
+  border-left: 3px solid #a9b8ad;
+  border-radius: 8px;
+  font-size: 11px;
+  line-height: 1.3;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.message-reply-quote:hover {
+  background: rgba(0, 0, 0, 0.09);
+}
+
+body.dark .message-reply-quote {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+body.dark .message-reply-quote:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.message-reply-quote-author {
+  font-weight: 600;
+  color: #7a9c81;
+  margin-bottom: 2px;
+}
+
+.message-reply-quote-text {
+  color: var(--text-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Подсветка оригинала при клике на цитату */
+
+@keyframes messageFlash {
+  0%, 100% { background-color: transparent; }
+  30% { background-color: rgba(169, 184, 173, 0.4); }
+}
+
+.message-row.flash .message-bubble {
+  animation: messageFlash 1.5s ease;
+}
+/* ================================
+SCROLL BOTTOM BUTTON
+================================ */
+
+.scroll-bottom-button {
+  position: absolute;
+  right: 20px;
+  bottom: 90px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-elevated);
+  color: var(--text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+  transition: opacity 0.2s ease, transform 0.2s ease, background 0.2s ease;
+  z-index: 20;
+}
+
+.scroll-bottom-button.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.scroll-bottom-button:hover {
+  background: var(--surface);
+}
+
+.scroll-bottom-button:active {
+  transform: scale(0.94);
+}
+
+/* Бейдж с числом новых сообщений на кнопке */
+.scroll-bottom-button .scroll-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 9px;
+  background: #c96a6a;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 600;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  font-family: inherit;
+  letter-spacing: 0;
+}
+
+.scroll-bottom-button .scroll-badge.visible {
+  display: flex;
+}
+/* ================================
+MESSAGE TICKS (галочки прочтения)
+================================ */
+
+.tick {
+  display: inline-block;
+  margin-left: 3px;
+  letter-spacing: -2px;
+  font-size: 10px;
+  line-height: 1;
+}
+
+.tick-sent {
+  color: var(--text-soft);
+}
+
+.tick-read {
+  color: #6ca57d;
+}
+/* ================================
+ГРУППИРОВКА СООБЩЕНИЙ
+================================ */
+
+/* Скрыть аватарку у последующих сообщений (через невидимость) */
+.message-row.grouped .message-avatar {
+  visibility: hidden;
+}
+
+/* Скрыть имя у последующих */
+.message-row.grouped .message-name {
+  display: none;
+}
+
+/* Первое сообщение в группе — обычный отступ */
+.message-row.group-start {
+  margin-top: 2px;
+}
+
+/* Последующие в группе — плотнее */
+.message-row.grouped {
+  margin-top: 0px;    /* ← было -6px, станет 2px */
+}
+
+/* Верхние углы в группе — плоские, чтобы «слипались» */
+.message-row.grouped .message-bubble.incoming {
+  border-top-left-radius: 6px;
+}
+
+.message-row.grouped .message-bubble.outgoing {
+  border-top-right-radius: 6px;
+}
+
+/* Если следующее сообщение из группы — нижний угол плоский */
+.message-row.group-middle .message-bubble.incoming {
+  border-bottom-left-radius: 6px;
+}
+
+.message-row.group-middle .message-bubble.outgoing {
+  border-bottom-right-radius: 6px;
+}
+
+/* Мета (время, галочки) — только у последнего в группе */
+.message-row:not(.group-end) .message-meta {
+  display: none;
+}
+/* Время у самого последнего сообщения в чате — всегда видно */
+.messages .message-row:last-of-type .message-meta {
+  display: block;
+}
+/* ================================
+PROFILE MODAL
+================================ */
+
+.profile-modal {
+  position: fixed;
+  inset: 0;
+  background: var(--overlay);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease;
+  z-index: 200;
+}
+
+.profile-modal.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.profile-modal-content {
+  width: 100%;
+  max-width: 360px;
+  background: var(--bg);
+  border-radius: 26px;
+  padding: 24px;
+  box-shadow: 0 25px 60px var(--modal-shadow);
+  transform: scale(0.96);
+  transition: transform 0.18s ease, background 0.25s ease;
+}
+
+.profile-modal.open .profile-modal-content {
+  transform: scale(1);
+}
+
+.profile-modal-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 18px;
+  letter-spacing: -0.2px;
+  color: var(--text);
+}
+
+.profile-modal-label {
+  font-size: 10px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  margin-bottom: 10px;
+}
+
+/* Палитра */
+
+.color-picker {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.color-swatch {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 12px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+  padding: 0;
+}
+
+.color-swatch:hover {
+  transform: scale(1.06);
+}
+
+.color-swatch.active {
+  border-color: var(--text);
+  transform: scale(1.05);
+}
+
+body.dark .color-swatch.active {
+  border-color: var(--bg);
+}
+
+/* День рождения */
+
+/* День рождения: два селекта */
+
+.birthday-picker {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.birthday-day,
+.birthday-month {
+  height: 46px;
+  border-radius: 14px;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-elevated);
+  padding: 0 14px;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--text);
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.25s ease;
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238e8b82' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+}
+
+.birthday-day {
+  flex: 0 0 90px;
+}
+
+.birthday-month {
+  flex: 1;
+}
+
+.birthday-day:focus,
+.birthday-month:focus {
+  border-color: #9baa9e;
+}
+
+.birthday-input:focus {
+  border-color: #9baa9e;
+}
+
+.profile-modal-error {
+  font-size: 11px;
+  color: #b36969;
+  height: 14px;
+  margin-bottom: 8px;
+}
+
+.profile-modal-actions {
+  margin-top: 8px;
+  display: flex;
+  gap: 8px;
+}
+
+.profile-modal-cancel,
+.profile-modal-save {
+  flex: 1;
+  height: 44px;
+  border: none;
+  border-radius: 14px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.profile-modal-cancel {
+  background: var(--surface);
+  color: var(--text);
+}
+
+.profile-modal-cancel:hover {
+  background: var(--surface-hover);
+}
+
+.profile-modal-save {
+  background: #a9b8ad;
+  color: #20231f;
+}
+
+.profile-modal-save:hover {
+  background: #9cad9f;
+}
+/* ================================
+USER CARD MODAL
+================================ */
+
+.user-card-modal {
+  position: fixed;
+  inset: 0;
+  background: var(--overlay);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 200;
+}
+
+.user-card-modal.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.user-card-content {
+  width: 100%;
+  max-width: 320px;
+  background: var(--bg);
+  border-radius: 26px;
+  padding: 28px 24px 24px;
+  box-shadow: 0 25px 60px var(--modal-shadow);
+  transform: scale(0.96);
+  transition: transform 0.18s ease, background 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.user-card-modal.open .user-card-content {
+  transform: scale(1);
+}
+
+.user-card-avatar {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.user-card-name {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.4px;
+  color: var(--text);
+}
+
+.user-card-status {
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--text-soft);
+}
+
+.user-card-section {
+  width: 100%;
+  margin-top: 18px;
+  padding: 14px 16px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  text-align: left;
+}
+
+.user-card-section-label {
+  font-size: 9px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  margin-bottom: 6px;
+}
+
+.user-card-mood {
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--text);
+}
+
+.user-card-birthday {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.user-card-actions {
+  width: 100%;
+  margin-top: 22px;
+  display: flex;
+  gap: 8px;
+}
+
+.user-card-close,
+.user-card-open-chat {
+  flex: 1;
+  height: 44px;
+  border: none;
+  border-radius: 14px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.user-card-close {
+  background: var(--surface);
+  color: var(--text);
+}
+
+.user-card-close:hover {
+  background: var(--surface-hover);
+}
+
+.user-card-open-chat {
+  background: #a9b8ad;
+  color: #20231f;
+}
+
+.user-card-open-chat:hover {
+  background: #9cad9f;
+}
+/* ================================
+SPLASH SCREEN
+================================ */
+
+.splash-screen {
+  position: absolute;
+  inset: 0;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5000;
+  opacity: 1;
+  transition: opacity 0.4s ease;
+  pointer-events: auto;
+}
+
+.splash-screen.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.splash-logo {
+  font-size: 72px;
+  font-weight: 650;
+  letter-spacing: -4px;
+  color: var(--text);
+  animation: splashPulse 1.2s ease-in-out infinite;
+}
+
+.splash-logo span {
+  color: #9baa9e;
+}
+
+@keyframes splashPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+}
+/* ================================
+АНИМАЦИЯ ПОЯВЛЕНИЯ СООБЩЕНИЯ
+================================ */
+
+@keyframes messageAppear {
+  0% {
+    opacity: 0;
+    transform: translateY(12px) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.message-row.animate-in {
+  animation: messageAppear 0.25s ease-out;
+}
+
+/* Не анимируем разделители и сообщения, приходящие из истории */
+.chat-date,
+.message-row.no-animate {
+  animation: none;
+}
+/* ================================
+CHATS LIST SCREEN
+================================ */
+
+.chats-list-screen {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.chats-list-screen.visible {
+  opacity: 1;
+}
+
+.chats-list-header {
+  padding: 26px 22px 12px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chats-add-button {
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.15s ease;
+}
+
+.chats-add-button:hover {
+  background: var(--surface);
+}
+
+.chats-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 22px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(128, 128, 128, 0.3) transparent;
+}
+
+.chats-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chats-list::-webkit-scrollbar-thumb {
+  background: rgba(128, 128, 128, 0.25);
+  border-radius: 3px;
+}
+
+/* Карточка чата */
+
+.chat-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px;
+  border-radius: 18px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.chat-item:hover {
+  background: var(--surface-hover);
+}
+
+.chat-item-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 600;
+  color: rgba(23, 23, 20, 0.85);
+  position: relative;
+}
+
+/* Аватарка группы — три маленьких кружка */
+
+.chat-item-avatar.group {
+  background: transparent;
+}
+
+.chat-item-avatar.group .group-mini {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+  border: 2px solid var(--bg);
+  color: rgba(23, 23, 20, 0.85);
+}
+
+.chat-item-avatar.group .group-mini:nth-child(1) {
+  top: 0;
+  left: 0;
+}
+
+.chat-item-avatar.group .group-mini:nth-child(2) {
+  top: 0;
+  right: 0;
+}
+
+.chat-item-avatar.group .group-mini:nth-child(3) {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.chat-item-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.chat-item-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 3px;
+}
+
+.chat-item-last {
+  font-size: 12px;
+  color: var(--text-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chat-item-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.chat-item-time {
+  font-size: 10px;
+  color: var(--text-soft);
+}
+
+/* Пустое состояние */
+
+.chats-empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 30px;
+  text-align: center;
+  color: var(--text-soft);
+}
+
+.chats-empty .empty-icon {
+  color: var(--text-soft);
+  margin-bottom: 18px;
+}
+/* ================================
+NEW CHAT MODAL
+================================ */
+
+.new-chat-modal {
+  position: fixed;
+  inset: 0;
+  background: var(--overlay);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease;
+  z-index: 200;
+}
+
+.new-chat-modal.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.new-chat-modal-content {
+  width: 100%;
+  max-width: 340px;
+  background: var(--bg);
+  border-radius: 26px;
+  padding: 24px;
+  box-shadow: 0 25px 60px var(--modal-shadow);
+  transform: scale(0.96);
+  transition: transform 0.18s ease, background 0.25s ease;
+}
+
+.new-chat-modal.open .new-chat-modal-content {
+  transform: scale(1);
+}
+
+.new-chat-modal-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.2px;
+}
+
+.new-chat-modal-subtitle {
+  margin-top: 4px;
+  margin-bottom: 16px;
+  font-size: 12px;
+  color: var(--text-soft);
+}
+
+.new-chat-users {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.new-chat-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  border: none;
+  border-radius: 14px;
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  transition: background 0.15s ease;
+  width: 100%;
+}
+
+.new-chat-user:hover {
+  background: var(--surface-hover);
+}
+
+.new-chat-user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 600;
+  color: rgba(23, 23, 20, 0.85);
+}
+
+.new-chat-user-name {
+  font-size: 14px;
+  color: var(--text);
+}
+
+.new-chat-user-hint {
+  font-size: 11px;
+  color: var(--text-soft);
+  margin-top: 2px;
+}
+
+.new-chat-empty {
+  padding: 20px 0;
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-soft);
+}
+
+.new-chat-modal-actions {
+  margin-top: 16px;
+  display: flex;
+}
+
+.new-chat-cancel {
+  flex: 1;
+  height: 44px;
+  border: none;
+  border-radius: 14px;
+  background: var(--surface);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.new-chat-cancel:hover {
+  background: var(--surface-hover);
+}
+/* ================================
+CHAT ACTIONS MENU + CONFIRM
+================================ */
+
+.chat-actions-menu {
+  position: fixed;
+  z-index: 500;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-strong);
+  border-radius: 16px;
+  padding: 6px;
+  box-shadow: 0 12px 30px var(--modal-shadow);
+  display: none;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 180px;
+}
+
+.chat-actions-menu.open {
+  display: flex;
+}
+
+.confirm-chat-modal {
+  position: fixed;
+  inset: 0;
+  background: var(--overlay);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease;
+  z-index: 260;
+}
+
+.confirm-chat-modal.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.confirm-chat-modal .confirm-modal-content {
+  transform: scale(0.96);
+  transition: transform 0.18s ease, background 0.25s ease;
+}
+
+.confirm-chat-modal.open .confirm-modal-content {
+  transform: scale(1);
+}
+
+/* Кнопки внутри confirm-chat */
+
+.confirm-chat-cancel,
+.confirm-chat-delete {
+  flex: 1;
+  height: 44px;
+  border: none;
+  border-radius: 14px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.confirm-chat-cancel {
+  background: var(--surface);
+  color: var(--text);
+}
+
+.confirm-chat-cancel:hover {
+  background: var(--surface-hover);
+}
+
+.confirm-chat-delete {
+  background: #b36969;
+  color: #ffffff;
+}
+
+.confirm-chat-delete:hover {
+  background: #a35a5a;
+}
+/* ================================
+TYPING В ШАПКЕ ЧАТА
+================================ */
+
+.chat-header-members.typing {
+  color: #7ea880;
+  font-weight: 500;
+  animation: typingPulse 1.2s ease-in-out infinite;
+}
+
+@keyframes typingPulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+/* ================================
+CHAT ITEM BADGE
+================================ */
+
+.chat-item-badge {
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 10px;
+  background: #c96a6a;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  letter-spacing: 0;
+}
+/* ================================
+НОВЫЙ РАЗДЕЛ ME
+================================ */
+
+/* Профиль hero */
+.profile-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 22px 28px;
+}
+
+.profile-avatar {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: var(--blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: 600;
+  color: rgba(23, 23, 20, 0.72);
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.profile-name {
+  margin-top: 14px;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.4px;
+  color: var(--text);
+}
+
+.profile-username {
+  margin-top: 3px;
+  font-size: 13px;
+  color: var(--text-soft);
+  letter-spacing: 0.2px;
+}
+
+/* Быстрые карточки */
+.profile-cards {
+  padding: 0 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.profile-card {
+  background: #ffffff;
+  border: none;
+  border-radius: 20px;
+  padding: 16px 18px;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(23, 23, 20, 0.03), 0 4px 16px rgba(23, 23, 20, 0.04);
+  transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+}
+
+body.dark .profile-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+}
+
+.profile-card:hover {
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 2px 4px rgba(23, 23, 20, 0.04), 0 8px 24px rgba(23, 23, 20, 0.06);
+}
+
+body.dark .profile-card:hover {
+  background: #34363e;
+}
+
+.profile-card:hover {
+  background: var(--surface-hover);
+}
+
+.profile-card:active {
+  transform: scale(0.995);
+}
+
+.profile-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.profile-card-label {
+  font-size: 10px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+
+.profile-card-hint {
+  font-size: 14px;
+  color: var(--text-soft);
+  transition: color 0.15s ease;
+}
+
+.profile-card:hover .profile-card-hint {
+  color: var(--text);
+}
+
+.profile-card-value {
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--text);
+}
+
+/* Настройки */
+.profile-settings {
+  padding: 0 22px 20px;
+}
+
+.settings-group-label {
+  font-size: 10px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  margin-bottom: 8px;
+  padding-left: 4px;
+}
+
+.settings-list {
+  background: #ffffff;
+  border: 1px solid rgba(23, 23, 20, 0.05);
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 2px rgba(23, 23, 20, 0.04), 0 6px 20px rgba(23, 23, 20, 0.05);
+}
+
+body.dark .settings-list {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+}
+
+.settings-item + .settings-item {
+  border-top: 1px solid rgba(23, 23, 20, 0.04);
+}
+
+body.dark .settings-item + .settings-item {
+  border-top: 1px solid var(--border);
+}
+
+.settings-item {
+  width: 100%;
+  min-height: 54px;
+  padding: 0 18px;
+  border: none;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--text);
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s ease;
+}
+
+.settings-item + .settings-item {
+  border-top: 1px solid var(--border);
+}
+
+.settings-item:hover {
+  background: var(--surface-hover);
+}
+
+.settings-item-static {
+  cursor: default;
+}
+
+.settings-item-static:hover {
+  background: transparent;
+}
+
+.settings-item-label {
+  flex: 1;
+  color: var(--text);
+}
+
+.settings-item-value {
+  font-size: 13px;
+  color: var(--text-soft);
+}
+
+.settings-item-arrow {
+  font-size: 20px;
+  color: var(--text-soft);
+  margin-left: 4px;
+  line-height: 1;
+}
+
+/* Toggle темы */
+.theme-toggle {
+  position: relative;
+  width: 44px;
+  height: 26px;
+  border-radius: 13px;
+  border: none;
+  background: var(--surface);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s ease;
+  flex-shrink: 0;
+}
+
+.theme-toggle-knob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--bg-elevated);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease, background 0.25s ease;
+}
+
+body.dark #theme-toggle-button {
+  background: #6b8a72;
+}
+
+body.dark #theme-toggle-button .theme-toggle-knob {
+  transform: translateX(18px);
+  background: #f5f1e7;
+}
+/* Переключатель звука (когда выключен — зеленый фон) */
+#sound-toggle-button.active {
+  background: #6b8a72;
+}
+
+#sound-toggle-button.active .theme-toggle-knob {
+  transform: translateX(18px);
+  background: #f5f1e7;
+}
+/* Log out */
+.logout-button {
+  display: block;
+  margin: 4px auto 30px;
+  padding: 10px 20px;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--text-soft);
+  cursor: pointer;
+  border-radius: 12px;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.logout-button:hover {
+  color: #b36969;
+  background: var(--surface-hover);
+}
+.handle-modal {
+  position: fixed;
+  inset: 0;
+  background: var(--overlay);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease;
+  z-index: 200;
+}
+
+.handle-modal.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.handle-modal-content {
+  width: 100%;
+  max-width: 340px;
+  background: var(--bg);
+  border-radius: 26px;
+  padding: 24px;
+  box-shadow: 0 25px 60px var(--modal-shadow);
+  transform: scale(0.96);
+  transition: transform 0.18s ease, background 0.25s ease;
+}
+
+.handle-modal.open .handle-modal-content {
+  transform: scale(1);
+}
+
+.handle-modal-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--text);
+}
+
+.handle-input {
+  width: 100%;
+  height: 46px;
+  border-radius: 14px;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-elevated);
+  padding: 0 16px;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--text);
+  outline: none;
+}
+
+.handle-input:focus {
+  border-color: #9baa9e;
+}
+
+.handle-error {
+  margin-top: 8px;
+  font-size: 11px;
+  color: #b36969;
+  height: 14px;
+}
+
+.handle-modal-actions {
+  margin-top: 16px;
+  display: flex;
+  gap: 8px;
+}
+
+.handle-cancel,
+.handle-save {
+  flex: 1;
+  height: 44px;
+  border: none;
+  border-radius: 14px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.handle-cancel {
+  background: var(--surface);
+  color: var(--text);
+}
+
+.handle-save {
+  background: var(--accent);
+  color: #ffffff;
+}
+/* ================================
+СКРЫТЫЙ СКРОЛЛБАР
+================================ */
+
+/* Для Firefox */
+.main-screens > section,
+.chats-list,
+.messages,
+.diary-entries,
+.moments-list {
+  scrollbar-width: none;
+}
+
+/* Для Chrome, Safari, Edge */
+.main-screens > section::-webkit-scrollbar,
+.chats-list::-webkit-scrollbar,
+.messages::-webkit-scrollbar,
+.diary-entries::-webkit-scrollbar,
+.moments-list::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+/* ================================
+ЛОГИН / РЕГИСТРАЦИЯ
+================================ */
+
+.login-tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--surface);
+  padding: 4px;
+  border-radius: 14px;
+  margin-top: 40px;
+  width: 100%;
+  max-width: 300px;
+}
+
+.login-tab {
+  flex: 1;
+  height: 38px;
+  border: none;
+  background: transparent;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--text-soft);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.login-tab.active {
+  background: var(--bg-elevated);
+  color: var(--text);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.login-panel {
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: 300px;
+  margin-top: 20px;
+}
+
+.login-panel.active {
+  display: flex;
+}
+
+.login-field {
+  width: 100%;
+  height: 48px;
+  border-radius: 14px;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-elevated);
+  padding: 0 16px;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.login-field:focus {
+  border-color: var(--accent);
+}
+
+.login-field::placeholder {
+  color: var(--text-soft);
+}
+
+.login-submit {
+  width: 100%;
+  height: 48px;
+  border: none;
+  border-radius: 14px;
+  background: var(--accent);
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  margin-top: 4px;
+  transition: filter 0.15s ease;
+}
+
+.login-submit:hover {
+  filter: brightness(0.95);
+}
+
+.login-submit:active {
+  filter: brightness(0.9);
+}
+
+.login-error {
+  margin-top: 2px;
+  font-size: 11px;
+  color: #b36969;
+  min-height: 14px;
+  text-align: center;
+}
+/* ================================
+PLANS SCREEN
+================================ */
+
+.plans-screen {
+  padding: 0;
+  flex-direction: column;
+}
+
+.plans-header {
+  padding: 26px 22px 12px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.plans-add-button {
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.15s ease;
+}
+
+.plans-add-button:hover {
+  background: var(--surface);
+}
+
+/* Табы */
+.plans-tabs {
+  display: flex;
+  gap: 4px;
+  padding: 0 22px 14px;
+  flex-shrink: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.plans-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.plans-tab {
+  padding: 7px 14px;
+  border-radius: 12px;
+  border: none;
+  background: transparent;
+  color: var(--text-soft);
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.plans-tab.active {
+  background: var(--surface);
+  color: var(--text);
+}
+
+/* Список */
+.plans-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 22px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  scrollbar-width: none;
+}
+
+.plans-list::-webkit-scrollbar {
+  display: none;
+}
+
+/* Пустое состояние */
+.plans-empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 30px;
+  text-align: center;
+  color: var(--text-soft);
+}
+
+.plans-empty svg {
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.plans-empty-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.plans-empty-subtitle {
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* Разделитель по дате */
+.plans-date-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 16px 0 4px;
+  font-size: 10px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+
+.plans-date-divider:first-child {
+  margin-top: 0;
+}
+
+.plans-date-divider::before,
+.plans-date-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* Карточка записи */
+.plan-item {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.plan-item:hover {
+  transform: translateY(-1px);
+}
+
+.plan-item:active {
+  transform: scale(0.995);
+}
+
+/* Кружок/галочка слева */
+.plan-check {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  border: 1.6px solid var(--text-soft);
+  background: transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+  margin-top: 1px;
+}
+
+.plan-check.done {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #ffffff;
+}
+
+.plan-check svg {
+  width: 12px;
+  height: 12px;
+  display: none;
+}
+
+.plan-check.done svg {
+  display: block;
+}
+
+/* Тип-иконка (для reminder) */
+.plan-item-icon {
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* Контент */
+.plan-item-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.plan-item-text {
+  font-size: 14px;
+  line-height: 1.35;
+  color: var(--text);
+  word-wrap: break-word;
+}
+
+.plan-item.done .plan-item-text {
+  position: relative;
+  color: var(--text-soft);
+  text-decoration: none;
+}
+
+.plan-item.done .plan-item-text {
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--text-soft);
+  color: var(--text-soft);
+}
+
+.plan-item-meta {
+  margin-top: 4px;
+  font-size: 11px;
+  color: var(--text-soft);
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.plan-item-repeat {
+  font-style: italic;
+  opacity: 0.85;
+}
+
+/* Модалка */
+.plan-modal {
+  position: fixed;
+  inset: 0;
+  background: var(--overlay);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease;
+  z-index: 200;
+}
+
+.plan-modal.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.plan-modal-content {
+  width: 100%;
+  max-width: 380px;
+  background: var(--bg);
+  border-radius: 26px;
+  padding: 24px;
+  box-shadow: 0 25px 60px var(--modal-shadow);
+  transform: scale(0.96);
+  transition: transform 0.18s ease;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.plan-modal.open .plan-modal-content {
+  transform: scale(1);
+}
+
+.plan-modal-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--text);
+}
+
+/* Выбор типа */
+.plan-type-picker {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.plan-type-option {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid var(--border-strong);
+  background: transparent;
+  color: var(--text-soft);
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.plan-type-option.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #ffffff;
+}
+
+.plan-type-icon {
+  display: flex;
+  align-items: center;
+}
+
+/* Поля */
+.plan-textarea,
+.plan-input {
+  width: 100%;
+  border-radius: 14px;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-elevated);
+  padding: 12px 14px;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.plan-textarea {
+  min-height: 60px;
+  resize: vertical;
+  line-height: 1.4;
+  margin-bottom: 14px;
+}
+
+.plan-input {
+  height: 44px;
+  padding: 0 14px;
+}
+
+.plan-textarea:focus,
+.plan-input:focus {
+  border-color: var(--accent);
+}
+
+.plan-field-group {
+  margin-bottom: 12px;
+}
+
+.plan-field-label {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  margin-bottom: 6px;
+}
+
+.plan-modal-error {
+  margin-top: 6px;
+  margin-bottom: 6px;
+  font-size: 11px;
+  color: #b36969;
+  min-height: 14px;
+}
+
+.plan-modal-actions {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+}
+
+.plan-cancel,
+.plan-save {
+  flex: 1;
+  height: 44px;
+  border: none;
+  border-radius: 14px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.plan-cancel {
+  background: var(--surface);
+  color: var(--text);
+}
+
+.plan-save {
+  background: var(--accent);
+  color: #ffffff;
+}
+/* ================================
+MESSAGE ACTIONS MENU
+================================ */
+
+.message-actions-menu {
+  position: fixed;
+  z-index: 500;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-strong);
+  border-radius: 16px;
+  padding: 6px;
+  box-shadow: 0 12px 30px var(--modal-shadow);
+  display: none;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 170px;
+}
+
+.message-actions-menu.open {
+  display: flex;
+}
+
+.message-action {
+  border: none;
+  background: transparent;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.15s ease;
+  text-align: left;
+}
+
+.message-action:hover {
+  background: var(--surface-hover);
+}
+
+.message-action svg {
+  color: var(--text-soft);
+  flex-shrink: 0;
+}
+
+.message-action-danger {
+  color: #a35a5a;
+}
+
+.message-action-danger svg {
+  color: #a35a5a;
+}
+
+body.dark .message-action-danger {
+  color: #d48484;
+}
+
+body.dark .message-action-danger svg {
+  color: #d48484;
+}
+
+/* ================================
+CHAT ACTIONS MENU
+================================ */
+
+.chat-actions-menu {
+  position: fixed;
+  z-index: 500;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-strong);
+  border-radius: 16px;
+  padding: 6px;
+  box-shadow: 0 12px 30px var(--modal-shadow);
+  display: none;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 180px;
+}
+
+.chat-actions-menu.open {
+  display: flex;
+}
+/* ================================
+PLAN MODAL — новая структура
+================================ */
+
+.plan-modal .plan-textarea {
+  margin-bottom: 16px;
+  min-height: 80px;
+}
+
+.plan-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.plan-extra-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 4px;
+  animation: planFieldsIn 0.2s ease;
+}
+
+@keyframes planFieldsIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Тип-пикер теперь внизу — компактнее */
+.plan-type-picker {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  background: var(--surface);
+  border-radius: 12px;
+}
+
+.plan-type-option {
+  flex: 1;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--text-soft);
+  font-family: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 9px;
+  transition: all 0.15s ease;
+}
+
+.plan-type-option.active {
+  background: var(--bg-elevated);
+  color: var(--text);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+/* ================================
+PLANS — header actions
+================================ */
+
+.plans-header-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.plans-clear-button {
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: transparent;
+  color: var(--text-soft);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.plans-clear-button:hover {
+  background: var(--surface);
+  color: var(--text);
+}
+
+/* ================================
+PLAN ACTIONS SHEET
+================================ */
+
+.plan-actions-sheet {
+  position: fixed;
+  inset: 0;
+  background: var(--overlay);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 260;
+}
+
+.plan-actions-sheet.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.plan-actions-content {
+  width: 100%;
+  max-width: 380px;
+  background: var(--bg);
+  border-radius: 26px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transform: translateY(20px);
+  transition: transform 0.22s ease;
+  margin-bottom: 10px;
+}
+
+.plan-actions-sheet.open .plan-actions-content {
+  transform: translateY(0);
+}
+
+/* ================================
+PLAN CONFIRM MODALS
+================================ */
+
+.plan-confirm-modal,
+.plan-clear-modal {
+  position: fixed;
+  inset: 0;
+  background: var(--overlay);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease;
+  z-index: 270;
+}
+
+.plan-confirm-modal.open,
+.plan-clear-modal.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ================================
+GALОЧКА (квадратная)
+================================ */
+
+.plan-check {
+  border-radius: 6px;
+}
+/* ================================
+HOME — NOTES & PLANS (компактно)
+================================ */
+
+.home-plans {
+  margin-top: 28px;
+}
+
+.home-plans-card {
+  padding: 16px 16px 12px;
+  border-radius: 20px;
+  background: #ffffff;
+  border: 1px solid rgba(64, 67, 78, 0.05);
+  box-shadow:
+    0 1px 2px rgba(64, 67, 78, 0.04),
+    0 8px 24px rgba(64, 67, 78, 0.06);
+}
+
+body.dark .home-plans-card {
+  background: #2c2e36;
+  border-color: rgba(248, 244, 239, 0.05);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.2),
+    0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* Шапка: заголовок + кнопка */
+.home-plans-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4px 10px;
+}
+
+.home-plans-title {
+  font-size: 10px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  font-weight: 500;
+}
+
+.home-plans-add {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: var(--text-soft);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.home-plans-add:hover {
+  background: var(--surface-hover);
+  color: var(--text);
+}
+
+/* Список */
+.home-plans-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Пустое состояние */
+.home-plans-empty {
+  font-size: 13px;
+  color: var(--text-soft);
+  line-height: 1.4;
+  padding: 8px 4px 12px;
+}
+
+/* Строка записи */
+.home-plan-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 9px 4px;
+  border-radius: 10px;
+  transition: background 0.15s ease;
+}
+
+.home-plan-item:hover {
+  background: rgba(64, 67, 78, 0.03);
+}
+
+body.dark .home-plan-item:hover {
+  background: rgba(248, 244, 239, 0.03);
+}
+
+/* Разделитель между строками (тонкий) */
+.home-plan-item + .home-plan-item {
+  border-top: 1px solid rgba(64, 67, 78, 0.04);
+}
+
+body.dark .home-plan-item + .home-plan-item {
+  border-top: 1px solid rgba(248, 244, 239, 0.04);
+}
+
+/* Маленький чекбокс */
+.home-plan-check {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1.5px solid var(--text-soft);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  transition: all 0.15s ease;
+  cursor: pointer;
+}
+
+.home-plan-check.done {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+body.dark .home-plan-check.done {
+  color: #171714;
+}
+
+.home-plan-check svg {
+  width: 9px;
+  height: 9px;
+  display: none;
+}
+
+.home-plan-check.done svg {
+  display: block;
+}
+
+/* Контент */
+.home-plan-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.home-plan-text {
+  font-size: 14px;
+  line-height: 1.3;
+  color: var(--text);
+  word-wrap: break-word;
+  flex: 1;
+  min-width: 0;
+}
+
+.home-plan-item.done .home-plan-text {
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+  color: var(--text-soft);
+}
+
+/* Мета — справа */
+.home-plan-meta {
+  font-size: 11px;
+  color: var(--text-soft);
+  display: flex;
+  gap: 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.home-plan-repeat {
+  font-style: italic;
+  opacity: 0.85;
+}
+
+/* Кнопка + в углу */
+.home-plans-add {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 1px 2px rgba(64, 67, 78, 0.05),
+    0 4px 12px rgba(64, 67, 78, 0.08);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.home-plans-add:hover {
+  transform: scale(1.06);
+  box-shadow:
+    0 2px 4px rgba(64, 67, 78, 0.06),
+    0 6px 16px rgba(64, 67, 78, 0.1);
+}
+
+.home-plans-add:active {
+  transform: scale(0.95);
+}
+
+body.dark .home-plans-add {
+  background: #3a3d45;
+  color: #f8f4ef;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.2),
+    0 4px 12px rgba(0, 0, 0, 0.3);
+}
+.home-plans-card {
+  background: #ffffff;
+  border: 1px solid rgba(64, 67, 78, 0.06);
+  box-shadow:
+    0 1px 2px rgba(64, 67, 78, 0.04),
+    0 8px 24px rgba(64, 67, 78, 0.05);
+}
+
+body.dark .home-plans-card {
+  background: #2c2e36;
+  border: 1px solid rgba(248, 244, 239, 0.06);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.2),
+    0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+/* Все тексты — стандартные из палитры */
+.home-plans-title,
+.home-plan-text {
+  color: var(--text);
+}
+
+.home-plans-label {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.home-plans-date,
+.home-plan-meta,
+.home-plans-empty {
+  color: var(--text-soft);
+}
+
+.home-plan-check {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.home-plan-check:not(.done) {
+  background: transparent;
+  border: 1.6px solid var(--text-soft);
+}
+
+.home-plan-item.done .home-plan-text {
+  color: var(--text-soft);
+}
+/* ================================
+FRIENDS SCREEN
+================================ */
+
+.friends-screen {
+  padding: 0;
+  flex-direction: column;
+}
+
+.friends-header {
+  padding: 26px 22px 12px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.friends-back-button {
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.15s ease;
+  flex-shrink: 0;
+}
+
+.friends-back-button:hover {
+  background: var(--surface);
+}
+
+.friends-header .page-title {
+  flex: 1;
+  margin: 0;
+}
+
+.friends-add-button {
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.15s ease;
+  flex-shrink: 0;
+}
+
+.friends-add-button:hover {
+  background: var(--surface);
+}
+
+/* Поиск */
+.friends-search {
+  padding: 0 22px 12px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.friends-search-input {
+  flex: 1;
+  height: 42px;
+  border-radius: 12px;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-elevated);
+  padding: 0 14px;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.friends-search-input:focus {
+  border-color: var(--accent);
+}
+
+.friends-search-cancel {
+  border: none;
+  background: transparent;
+  color: var(--text-soft);
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 8px 10px;
+  border-radius: 10px;
+  transition: color 0.15s ease;
+}
+
+.friends-search-cancel:hover {
+  color: var(--text);
+}
+
+/* Список */
+.friends-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 22px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  scrollbar-width: none;
+}
+
+.friends-list::-webkit-scrollbar {
+  display: none;
+}
+
+/* Заголовок секции */
+.friends-section-label {
+  font-size: 10px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  margin-top: 16px;
+  margin-bottom: 6px;
+  padding-left: 4px;
+}
+
+.friends-section-label:first-child {
+  margin-top: 0;
+}
+
+/* Карточка друга */
+.friend-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  transition: transform 0.1s ease;
+}
+
+.friend-item:hover {
+  transform: translateY(-1px);
+}
+
+.friend-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 600;
+  position: relative;
+}
+
+/* Онлайн-точка */
+.friend-avatar.online::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: #7ea880;
+  border: 2px solid var(--bg-elevated);
+}
+
+.friend-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.friend-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.friend-handle {
+  margin-top: 2px;
+  font-size: 12px;
+  color: var(--text-soft);
+}
+
+/* Действия в карточке */
+.friend-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.friend-action-btn {
+  border: none;
+  background: var(--surface);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 12px;
+  padding: 7px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.friend-action-btn:hover {
+  background: var(--surface-hover);
+}
+
+.friend-action-btn.primary {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.friend-action-btn.primary:hover {
+  filter: brightness(0.95);
+}
+
+.friend-action-btn.danger {
+  color: #a35a5a;
+}
+
+/* Пустое состояние */
+.friends-empty {
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--text-soft);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* ================================
+USER CARD — friend action
+================================ */
+
+.user-card-friend-action {
+  width: 100%;
+  margin-top: 18px;
+}
+
+.user-card-friend-action button {
+  width: 100%;
+  height: 42px;
+  border: none;
+  border-radius: 14px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: filter 0.15s ease, background 0.15s ease;
+}
+
+.user-card-friend-action button.primary {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.user-card-friend-action button.primary:hover {
+  filter: brightness(0.95);
+}
+
+.user-card-friend-action button.secondary {
+  background: var(--surface);
+  color: var(--text);
+}
+
+.user-card-friend-action button.secondary:hover {
+  background: var(--surface-hover);
+}
+
+.user-card-friend-action button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+/* ================================
+HOME — ONLINE FRIENDS
+================================ */
+
+.home-friends {
+  margin-top: 24px;
+}
+
+.home-friends-label {
+  font-size: 10px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  margin-bottom: 10px;
+  padding-left: 4px;
+}
+
+.home-friends-list {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 0 4px;
+}
+
+.home-friend-avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+  position: relative;
+}
+
+.home-friend-avatar:hover {
+  transform: scale(1.05);
+}
+
+/* Зелёная точка онлайн */
+.home-friend-avatar::after {
+  content: "";
+  position: absolute;
+  bottom: 1px;
+  right: 1px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #7ea880;
+  border: 2px solid var(--bg);
+}
+/* ================================
+NEW CHAT MODAL — tabs
+================================ */
+
+.new-chat-tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--surface);
+  padding: 4px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+.new-chat-tab {
+  flex: 1;
+  height: 34px;
+  border: none;
+  background: transparent;
+  border-radius: 9px;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--text-soft);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.new-chat-tab.active {
+  background: var(--bg-elevated);
+  color: var(--text);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.new-chat-panel {
+  display: none;
+  flex-direction: column;
+}
+
+.new-chat-panel.active {
+  display: flex;
+}
+
+.new-chat-group-title {
+  width: 100%;
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-elevated);
+  padding: 0 14px;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--text);
+  outline: none;
+  margin-bottom: 12px;
+  transition: border-color 0.15s ease;
+}
+
+.new-chat-group-title:focus {
+  border-color: var(--accent);
+}
+
+/* Выбор участников */
+.new-chat-user.selectable {
+  position: relative;
+}
+
+.new-chat-user.selectable.selected {
+  background: var(--surface);
+}
+
+.new-chat-user-check {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  border: 1.6px solid var(--text-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.15s ease;
+  color: #ffffff;
+}
+
+.new-chat-user.selectable.selected .new-chat-user-check {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.new-chat-user-check svg {
+  width: 12px;
+  height: 12px;
+  display: none;
+}
+
+.new-chat-user.selectable.selected .new-chat-user-check svg {
+  display: block;
+}
+
+.new-chat-create-group {
+  width: 100%;
+  height: 46px;
+  border: none;
+  border-radius: 14px;
+  background: var(--accent);
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: filter 0.15s ease;
+}
+
+.new-chat-create-group:hover {
+  filter: brightness(0.95);
+}
+
+.new-chat-create-group:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.new-chat-modal-error {
+  margin-top: 6px;
+  font-size: 11px;
+  color: #b36969;
+  min-height: 14px;
+  text-align: center;
+}
+/* ================================
+HOME — ONLINE FRIENDS
+================================ */
+
+.home-friends {
+  margin-top: 24px;
+}
+
+.home-friends-label {
+  font-size: 10px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  margin-bottom: 10px;
+  padding-left: 4px;
+}
+
+.home-friends-list {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 0 4px;
+}
+
+.home-friend-avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+  position: relative;
+}
+
+.home-friend-avatar:hover {
+  transform: scale(1.05);
+}
+
+.home-friend-avatar::after {
+  content: "";
+  position: absolute;
+  bottom: 1px;
+  right: 1px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #7ea880;
+  border: 2px solid var(--bg);
+}
+/* ================================
+iOS-STYLE POLISH
+Радиусы, тени, воздух — в стиле iOS
+Если не понравится — просто удали этот блок целиком
+================================ */
+
+/* ─── Общее: чуть мягче тени ─── */
+
+.app {
+  box-shadow:
+    0 30px 80px rgba(64, 67, 78, 0.16),
+    0 10px 30px rgba(64, 67, 78, 0.08),
+    0 2px 6px rgba(64, 67, 78, 0.04);
+}
+
+body.dark .app {
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.4),
+    0 10px 30px rgba(0, 0, 0, 0.25),
+    0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* ─── Карточки профиля ─── */
+
+.profile-card {
+  border-radius: 22px;
+  border: 1px solid rgba(64, 67, 78, 0.05);
+  box-shadow:
+    0 1px 2px rgba(64, 67, 78, 0.04),
+    0 8px 24px rgba(64, 67, 78, 0.06),
+    0 16px 40px rgba(64, 67, 78, 0.03);
+  padding: 18px 20px;
+}
+
+body.dark .profile-card {
+  border-color: rgba(248, 244, 239, 0.05);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.2),
+    0 8px 24px rgba(0, 0, 0, 0.2),
+    0 16px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* ─── Список настроек ─── */
+
+.settings-list {
+  border-radius: 22px;
+  border: 1px solid rgba(64, 67, 78, 0.05);
+  box-shadow:
+    0 1px 2px rgba(64, 67, 78, 0.04),
+    0 8px 24px rgba(64, 67, 78, 0.06),
+    0 16px 40px rgba(64, 67, 78, 0.03);
+}
+
+body.dark .settings-list {
+  border-color: rgba(248, 244, 239, 0.05);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.2),
+    0 8px 24px rgba(0, 0, 0, 0.2),
+    0 16px 40px rgba(0, 0, 0, 0.15);
+}
+
+.settings-item {
+  min-height: 56px;
+  padding: 0 20px;
+}
+
+/* ─── Home-карточка plans ─── */
+
+.home-plans-card {
+  border-radius: 28px;
+  box-shadow:
+    0 2px 4px rgba(64, 67, 78, 0.04),
+    0 12px 32px rgba(64, 67, 78, 0.06);
+}
+
+body.dark .home-plans-card {
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.2),
+    0 12px 32px rgba(0, 0, 0, 0.25);
+}
+
+/* ─── Строки в plans ─── */
+
+.plan-item {
+  border-radius: 18px;
+  border: 1px solid rgba(64, 67, 78, 0.05);
+  box-shadow:
+    0 1px 2px rgba(64, 67, 78, 0.03),
+    0 4px 12px rgba(64, 67, 78, 0.04);
+  padding: 14px 18px;
+}
+
+body.dark .plan-item {
+  border-color: rgba(248, 244, 239, 0.05);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.2),
+    0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* ─── Строки на home ─── */
+
+.home-plan-item {
+  padding: 14px 18px;
+  border-radius: 16px;
+}
+
+/* ─── Чаты в списке ─── */
+
+.chat-item {
+  border-radius: 22px;
+  padding: 14px 16px;
+}
+
+.chat-item-avatar {
+  box-shadow:
+    0 1px 3px rgba(64, 67, 78, 0.08),
+    0 4px 12px rgba(64, 67, 78, 0.06);
+}
+
+body.dark .chat-item-avatar {
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.3),
+    0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+/* ─── Друзья ─── */
+
+.friend-item {
+  border-radius: 20px;
+  border: 1px solid rgba(64, 67, 78, 0.05);
+  box-shadow:
+    0 1px 2px rgba(64, 67, 78, 0.03),
+    0 4px 12px rgba(64, 67, 78, 0.04);
+  padding: 14px 18px;
+}
+
+body.dark .friend-item {
+  border-color: rgba(248, 244, 239, 0.05);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.2),
+    0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* ─── Аватарки друзей и онлайн ─── */
+
+.friend-avatar,
+.home-friend-avatar {
+  box-shadow:
+    0 1px 3px rgba(64, 67, 78, 0.08),
+    0 3px 8px rgba(64, 67, 78, 0.06);
+}
+
+body.dark .friend-avatar,
+body.dark .home-friend-avatar {
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.3),
+    0 3px 8px rgba(0, 0, 0, 0.25);
+}
+
+/* ─── Сообщения в чате ─── */
+
+.message-bubble {
+  border-radius: 20px;
+  box-shadow:
+    0 1px 2px rgba(64, 67, 78, 0.03),
+    0 2px 6px rgba(64, 67, 78, 0.03);
+}
+
+body.dark .message-bubble {
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.2),
+    0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* ─── Поля ввода ─── */
+
+.input,
+.login-field,
+.friends-search-input,
+.plan-input,
+.plan-textarea {
+  border-radius: 16px;
+}
+
+/* ─── Кнопки ─── */
+
+.login-submit,
+.mood-save,
+.plan-save,
+.new-chat-create-group {
+  border-radius: 16px;
+  box-shadow:
+    0 1px 2px rgba(64, 67, 78, 0.04),
+    0 4px 12px rgba(64, 67, 78, 0.06);
+}
+
+body.dark .login-submit,
+body.dark .mood-save,
+body.dark .plan-save,
+body.dark .new-chat-create-group {
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.2),
+    0 4px 12px rgba(0, 0, 0, 0.2);
+}
+/* ================================
+FRIENDS BADGE
+================================ */
+
+.friends-count-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.friends-badge {
+  min-width: 18px;
+  height: 18px;
+  padding: 0 6px;
+  border-radius: 9px;
+  background: #c96a6a;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 600;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.friends-badge.visible {
+  display: flex;
+}
+/* ================================
+ФОТО В СООБЩЕНИИ
+================================ */
+
+.message-bubble.with-photo {
+  padding: 4px;
+  background: transparent;
+  border: none;
+  overflow: hidden;
+}
+
+.message-bubble.with-photo .message-reply-quote {
+  margin: 6px 6px 4px;
+  background: var(--bg);
+  border-left-color: var(--accent);
+}
+
+body.dark .message-bubble.with-photo .message-reply-quote {
+  background: #2c2e36;
+}
+
+.chat-photo {
+  display: block;
+  max-width: 280px;
+  width: 100%;
+  max-height: 320px;
+  object-fit: cover;
+  border-radius: 16px;
+  cursor: pointer;
+  background: var(--surface);
+  transition: transform 0.15s ease;
+}
+
+.chat-photo:hover {
+  transform: scale(1.01);
+}
+
+/* Текст под фото */
+.message-bubble.with-photo .message-bubble-text {
+  padding: 8px 10px 4px;
+  font-size: 14px;
+  line-height: 1.35;
+  color: var(--text);
+}
+
+body.dark .message-bubble.with-photo .message-bubble-text {
+  color: var(--text);
+}
+/* ================================
+SAVED SCREEN
+================================ */
+
+.saved-screen {
+  padding: 0;
+  display: none;
+  flex-direction: column;
+}
+
+.saved-screen.active {
+  display: flex;
+}
+
+.saved-header {
+  padding: 26px 22px 12px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.saved-back-button {
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.15s ease;
+  flex-shrink: 0;
+}
+
+.saved-back-button:hover {
+  background: var(--surface);
+}
+
+.saved-header .page-title {
+  flex: 1;
+  margin: 0;
+}
+
+/* Список */
+.saved-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 22px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  scrollbar-width: none;
+}
+
+.saved-list::-webkit-scrollbar {
+  display: none;
+}
+
+/* Пустое состояние */
+.saved-empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 30px;
+  text-align: center;
+  color: var(--text-soft);
+}
+
+.saved-empty svg {
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.saved-empty-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.saved-empty-subtitle {
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* Карточка сохранённого */
+.saved-item {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: transform 0.1s ease, background 0.15s ease;
+}
+
+.saved-item:hover {
+  transform: translateY(-1px);
+}
+
+.saved-item:active {
+  transform: scale(0.995);
+}
+
+/* Шапка карточки: имя автора + дата */
+.saved-item-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  gap: 8px;
+}
+
+.saved-item-author {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  min-width: 0;
+}
+
+.saved-item-avatar {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.saved-item-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.saved-item-date {
+  font-size: 10px;
+  color: var(--text-soft);
+  flex-shrink: 0;
+}
+
+/* Содержимое */
+.saved-item-text {
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--text);
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+/* Фото */
+.saved-item-photo {
+  display: block;
+  width: 100%;
+  max-height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-top: 4px;
+}
+
+/* Если есть и фото, и текст */
+.saved-item-text + .saved-item-photo {
+  margin-top: 8px;
+}
+
+/* Цитата reply */
+.saved-item-quote {
+  padding: 6px 10px;
+  margin-bottom: 8px;
+  background: rgba(64, 67, 78, 0.04);
+  border-left: 3px solid var(--accent);
+  border-radius: 8px;
+  font-size: 11px;
+  line-height: 1.3;
+}
+
+body.dark .saved-item-quote {
+  background: rgba(248, 244, 239, 0.04);
+}
+
+.saved-item-quote-author {
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 2px;
+}
+
+.saved-item-quote-text {
+  color: var(--text-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* Принудительно flex для saved, чтобы дочерние flex-элементы работали */
+.saved-screen.active {
+  display: flex !important;
+  flex-direction: column;
+}
+
+/* ================================
+ЦИТАТА ДНЯ
+================================ */
+
+.home-quote {
+  margin-top: 36px;
+  padding: 0 6px 20px;
+  text-align: center;
+}
+
+.home-quote-text {
+  font-size: 13px;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--text-soft);
+  max-width: 300px;
+  margin: 0 auto;
+  letter-spacing: 0.1px;
+  opacity: 0.75;
+}
+/* ================================
+АНИМАЦИЯ ЛОГОТИПА НА HOME
+================================ */
+
+@keyframes logoAppear {
+  0% {
+    opacity: 0;
+    transform: translateY(6px) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Анимируется при каждом показе home-screen */
+.home-screen.active .logo {
+  animation: logoAppear 0.6s ease-out;
+}
+
+/* Но не анимируется при первом показе (загрузка) */
+.home-screen.no-anim .logo {
+  animation: none;
+}
+/* ================================
+PLAN MEMBERS (с кем?)
+================================ */
+
+.plan-members {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(64, 67, 78, 0.06);
+  animation: planFieldsIn 0.2s ease;
+}
+
+body.dark .plan-members {
+  border-top-color: rgba(248, 244, 239, 0.06);
+}
+
+.plan-members-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 180px;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.plan-members-list::-webkit-scrollbar {
+  display: none;
+}
+
+.plan-member {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  user-select: none;
+}
+
+.plan-member:hover {
+  background: rgba(64, 67, 78, 0.04);
+}
+
+body.dark .plan-member:hover {
+  background: rgba(248, 244, 239, 0.04);
+}
+
+/* Квадратный чекбокс */
+.plan-member-check {
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  border: 1.6px solid var(--text-soft);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  transition: all 0.15s ease;
+}
+
+.plan-member.selected .plan-member-check {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+body.dark .plan-member.selected .plan-member-check {
+  color: #171714;
+}
+
+.plan-member-check svg {
+  width: 11px;
+  height: 11px;
+  display: none;
+}
+
+.plan-member.selected .plan-member-check svg {
+  display: block;
+}
+
+/* Аватарка */
+.plan-member-avatar {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* Имя */
+.plan-member-name {
+  flex: 1;
+  min-width: 0;
+  font-size: 13px;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Пустое состояние */
+.plan-members-empty {
+  padding: 8px 10px;
+  font-size: 12px;
+  color: var(--text-soft);
+  text-align: center;
+  font-style: italic;
+}
+/* ================================
+МЕТКА "ОБЩИЙ ПЛАН"
+================================ */
+
+.plan-item-members {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  color: var(--text-soft);
+  margin-top: 4px;
+}
+
+.plan-item-members-avatars {
+  display: flex;
+}
+
+.plan-item-members-avatar {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  font-weight: 600;
+  border: 1.5px solid var(--bg-elevated);
+  margin-left: -5px;
+}
+
+.plan-item-members-avatar:first-child {
+  margin-left: 0;
+}
+/* ================================
+HOME — ОБЩИЕ ПЛАНЫ
+================================ */
+
+.home-shared {
+  margin-top: 24px;
+}
+
+.home-shared-label {
+  font-size: 10px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  margin-bottom: 10px;
+  padding-left: 4px;
+}
+
+.home-shared-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  background: #ffffff;
+  border: 1px solid rgba(64, 67, 78, 0.05);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow:
+    0 1px 2px rgba(64, 67, 78, 0.04),
+    0 8px 24px rgba(64, 67, 78, 0.05);
+}
+
+body.dark .home-shared-list {
+  background: #2c2e36;
+  border-color: rgba(248, 244, 239, 0.05);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.2),
+    0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.home-shared-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.home-shared-item:hover {
+  background: rgba(64, 67, 78, 0.03);
+}
+
+body.dark .home-shared-item:hover {
+  background: rgba(248, 244, 239, 0.03);
+}
+
+.home-shared-item + .home-shared-item {
+  border-top: 1px solid rgba(64, 67, 78, 0.04);
+}
+
+body.dark .home-shared-item + .home-shared-item {
+  border-top: 1px solid rgba(248, 244, 239, 0.04);
+}
+
+/* Маленький чекбокс */
+.home-shared-check {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1.5px solid var(--text-soft);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  transition: all 0.15s ease;
+  cursor: pointer;
+}
+
+.home-shared-check.done {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+body.dark .home-shared-check.done {
+  color: #171714;
+}
+
+.home-shared-check svg {
+  width: 9px;
+  height: 9px;
+  display: none;
+}
+
+.home-shared-check.done svg {
+  display: block;
+}
+
+/* Контент */
+.home-shared-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.home-shared-text {
+  font-size: 14px;
+  line-height: 1.3;
+  color: var(--text);
+  word-wrap: break-word;
+}
+
+.home-shared-item.done .home-shared-text {
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+  color: var(--text-soft);
+}
+
+.home-shared-meta {
+  margin-top: 3px;
+  font-size: 11px;
+  color: var(--text-soft);
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+/* Блок «с кем» */
+.home-shared-members {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+/* Один участник — аватарка + имя */
+.home-shared-member {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--text);
+}
+
+/* Аватарка — круглая, маленькая */
+.home-shared-member-avatar {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+/* ================================
+CHAT HEADER — кнопка информации
+================================ */
+
+.chat-header-info {
+  flex: 1;
+  text-align: center;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 6px 8px;
+  border-radius: 12px;
+  transition: background 0.15s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.chat-header-info:hover {
+  background: var(--surface-hover);
+}
+
+/* ================================
+GROUP MODAL
+================================ */
+
+.group-modal {
+  position: fixed;
+  inset: 0;
+  background: var(--overlay);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease;
+  z-index: 260;
+}
+
+.group-modal.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.group-modal-content {
+  width: 100%;
+  max-width: 380px;
+  background: var(--bg);
+  border-radius: 26px;
+  padding: 20px 0 20px;
+  box-shadow: 0 25px 60px var(--modal-shadow);
+  transform: scale(0.96);
+  transition: transform 0.18s ease;
+  max-height: 85vh;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.group-modal-content::-webkit-scrollbar {
+  display: none;
+}
+
+.group-modal.open .group-modal-content {
+  transform: scale(1);
+}
+
+.group-modal-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.group-modal-back {
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.15s ease;
+  flex-shrink: 0;
+}
+
+.group-modal-back:hover {
+  background: var(--surface-hover);
+}
+
+.group-modal-header-title {
+  flex: 1;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.group-modal-section {
+  padding: 18px 20px 0;
+}
+
+.group-modal-label {
+  font-size: 10px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  margin-bottom: 8px;
+}
+
+.group-modal-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.group-modal-title {
+  flex: 1;
+  min-width: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  word-wrap: break-word;
+}
+
+.group-modal-edit-title {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  color: var(--text-soft);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.15s ease, color 0.15s ease;
+  flex-shrink: 0;
+}
+
+.group-modal-edit-title:hover {
+  background: var(--surface-hover);
+  color: var(--text);
+}
+
+/* Список участников */
+.group-members-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.group-member {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 8px;
+  border-radius: 12px;
+  cursor: default;
+  transition: background 0.15s ease;
+  position: relative;
+}
+
+.group-member:hover {
+  background: var(--surface-hover);
+}
+
+.group-member-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.group-member-name {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.group-member-you {
+  font-size: 11px;
+  color: var(--text-soft);
+  margin-left: 4px;
+}
+
+/* Действия */
+.group-modal-actions {
+  padding: 20px 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-top: 1px solid var(--border);
+  margin-top: 20px;
+}
+
+.group-modal-action {
+  width: 100%;
+  height: 48px;
+  border: none;
+  border-radius: 14px;
+  background: transparent;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 14px;
+  text-align: left;
+  transition: background 0.15s ease;
+}
+
+.group-modal-action:hover {
+  background: var(--surface-hover);
+}
+
+.group-modal-action svg {
+  color: var(--text-soft);
+  flex-shrink: 0;
+}
+
+.group-modal-action-danger {
+  color: #a35a5a;
+}
+
+.group-modal-action-danger svg {
+  color: #a35a5a;
+}
+
+body.dark .group-modal-action-danger {
+  color: #d48484;
+}
+
+body.dark .group-modal-action-danger svg {
+  color: #d48484;
+}
+
+/* ================================
+ADD MEMBER MODAL
+================================ */
+
+.add-member-modal {
+  position: fixed;
+  inset: 0;
+  background: var(--overlay);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease;
+  z-index: 270;
+}
+
+.add-member-modal.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.add-member-modal-content {
+  width: 100%;
+  max-width: 340px;
+  background: var(--bg);
+  border-radius: 26px;
+  padding: 24px;
+  box-shadow: 0 25px 60px var(--modal-shadow);
+  transform: scale(0.96);
+  transition: transform 0.18s ease;
+}
+
+.add-member-modal.open .add-member-modal-content {
+  transform: scale(1);
+}
+
+.add-member-modal-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--text);
+}
+
+.add-member-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 300px;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.add-member-list::-webkit-scrollbar {
+  display: none;
+}
+
+.add-member-empty {
+  padding: 20px 0;
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-soft);
+}
+
+/* Кнопка друга в модалке добавления */
+.add-member-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 8px;
+  border-radius: 14px;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  text-align: left;
+  width: 100%;
+  transition: background 0.15s ease;
+}
+
+.add-member-item:hover {
+  background: var(--surface-hover);
+}
+
+.add-member-item-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.add-member-item-name {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.add-member-item-hint {
+  font-size: 11px;
+  color: var(--text-soft);
+  margin-top: 2px;
+}
+
+.add-member-actions {
+  margin-top: 16px;
+  display: flex;
+}
+
+.add-member-cancel {
+  flex: 1;
+  height: 44px;
+  border: none;
+  border-radius: 14px;
+  background: var(--surface);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.add-member-cancel:hover {
+  background: var(--surface-hover);
+}
+
+/* ================================
+RENAME MODAL
+================================ */
+
+.rename-modal {
+  position: fixed;
+  inset: 0;
+  background: var(--overlay);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease;
+  z-index: 280;
+}
+
+.rename-modal.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.rename-modal-content {
+  width: 100%;
+  max-width: 340px;
+  background: var(--bg);
+  border-radius: 26px;
+  padding: 24px;
+  box-shadow: 0 25px 60px var(--modal-shadow);
+  transform: scale(0.96);
+  transition: transform 0.18s ease;
+}
+
+.rename-modal.open .rename-modal-content {
+  transform: scale(1);
+}
+
+.rename-modal-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--text);
+}
+
+.rename-input {
+  width: 100%;
+  height: 46px;
+  border-radius: 14px;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-elevated);
+  padding: 0 16px;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.rename-input:focus {
+  border-color: var(--accent);
+}
+
+.rename-modal-error {
+  margin-top: 8px;
+  font-size: 11px;
+  color: #b36969;
+  min-height: 14px;
+}
+
+.rename-modal-actions {
+  margin-top: 16px;
+  display: flex;
+  gap: 8px;
+}
+
+.rename-cancel,
+.rename-save {
+  flex: 1;
+  height: 44px;
+  border: none;
+  border-radius: 14px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.rename-cancel {
+  background: var(--surface);
+  color: var(--text);
+}
+
+.rename-cancel:hover {
+  background: var(--surface-hover);
+}
+
+.rename-save {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.rename-save:hover {
+  filter: brightness(0.95);
+}
+.chat-header-spacer {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+}
+/* ================================
+ЗАГРУЗКА АВАТАРКИ — личная
+================================ */
+
+.avatar-upload {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.avatar-upload-button {
+  flex: 1;
+  height: 46px;
+  border: 1px solid var(--border-strong);
+  border-radius: 14px;
+  background: var(--bg-elevated);
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.avatar-upload-button:hover {
+  background: var(--surface-hover);
+  border-color: var(--accent);
+}
+
+.avatar-remove-button {
+  height: 46px;
+  padding: 0 16px;
+  border: 1px solid var(--border-strong);
+  border-radius: 14px;
+  background: transparent;
+  font-family: inherit;
+  font-size: 13px;
+  color: #a35a5a;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  flex-shrink: 0;
+}
+
+.avatar-remove-button:hover {
+  background: rgba(163, 90, 90, 0.08);
+}
+
+body.dark .avatar-remove-button {
+  color: #d48484;
+}
+
+body.dark .avatar-remove-button:hover {
+  background: rgba(212, 132, 132, 0.1);
+}
+
+/* ================================
+GROUP MODAL — аватарка группы
+================================ */
+
+.group-modal-avatar-section {
+  padding: 16px 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.group-avatar-button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  font-family: inherit;
+}
+
+.group-avatar-preview {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 600;
+  color: rgba(23, 23, 20, 0.85);
+  background: var(--surface);
+  background-size: cover;
+  background-position: center;
+  transition: filter 0.15s ease;
+}
+
+.group-avatar-button:hover .group-avatar-preview {
+  filter: brightness(0.95);
+}
+
+.group-avatar-hint {
+  font-size: 11px;
+  color: var(--text-soft);
+  transition: color 0.15s ease;
+}
+
+.group-avatar-button:hover .group-avatar-hint {
+  color: var(--text);
+}
+
+/* ================================
+АВАТАРКИ В СПИСКЕ ЧАТОВ — фото
+================================ */
+
+/* Если у чата/юзера есть avatar_url — фон будет через style
+   (см. JS), но убедимся, что textContent не мешает */
+.chat-item-avatar.has-photo,
+.friend-avatar.has-photo,
+.new-chat-user-avatar.has-photo,
+.add-member-item-avatar.has-photo,
+.group-member-avatar.has-photo,
+.message-avatar.has-photo {
+  background-size: cover;
+  background-position: center;
+  color: transparent;
+}
+/* ================================
+MIC BUTTON
+================================ */
+
+.mic-button {
+  width: 41px;
+  height: 41px;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  background: transparent;
+  color: var(--text-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.mic-button:hover {
+  background: var(--surface-hover);
+  color: var(--text);
+}
+
+.mic-button.recording {
+  background: #c96a6a;
+  color: #ffffff;
+}
+
+/* ================================
+IN-CHAT RECORDING UI
+================================ */
+
+.recording-active {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-left: 6px;
+  color: var(--text);
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+.recording-cancel-btn {
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-soft);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.recording-cancel-btn:hover {
+  background: var(--surface-hover);
+  color: #c96a6a;
+}
+
+.recording-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #c96a6a;
+  animation: voicePulse 1.2s ease-in-out infinite;
+}
+
+@keyframes voicePulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.4; }
+}
+
+.recording-time {
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+/* Когда мы в режиме записи, кнопка отправки становится галочкой */
+.send-button.is-send-voice {
+  background: var(--accent);
+  color: #ffffff;
+  opacity: 1;
+}
+
+/* ================================
+ВИДЕО В СООБЩЕНИИ
+================================ */
+
+.chat-video {
+  display: block;
+  max-width: 280px;
+  width: 100%;
+  border-radius: 16px;
+  background: #000;
+  cursor: pointer;
+}
+
+/* ================================
+ГОЛОСОВОЕ СООБЩЕНИЕ
+================================ */
+
+.voice-bubble {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 180px;
+  padding: 4px 2px;
+}
+
+.voice-play {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.1s ease;
+}
+
+.voice-play:active {
+  transform: scale(0.94);
+}
+
+.voice-play svg {
+  display: block;
+}
+
+/* Иконка паузы по умолчанию скрыта */
+.voice-play .icon-pause {
+  display: none;
+}
+
+.voice-play.playing .icon-play {
+  display: none;
+}
+
+.voice-play.playing .icon-pause {
+  display: block;
+}
+
+.voice-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.voice-wave {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 22px;
+}
+
+.voice-wave span {
+  display: block;
+  width: 2.5px;
+  border-radius: 2px;
+  background: var(--text-soft);
+  opacity: 0.55;
+  transition: opacity 0.15s ease;
+}
+
+/* Когда играет — столбики ярче */
+.voice-bubble.playing .voice-wave span {
+  opacity: 0.9;
+}
+
+.voice-time {
+  margin-top: 2px;
+  font-size: 10px;
+  color: var(--text-soft);
+  font-variant-numeric: tabular-nums;
+}
+/* ================================
+ВИДЕО В ПОЛНОЭКРАННОМ ПРОСМОТРЕ
+================================ */
+
+.photo-viewer-video {
+  max-width: 90%;
+  max-height: 82%;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  transform: scale(0.96);
+  transition: transform 0.2s ease;
+  background: #000;
+}
+
+.photo-viewer.open .photo-viewer-video {
+  transform: scale(1);
+}
+.mic-button.holding {
+  background: #c96a6a;
+  color: #ffffff;
+  transform: scale(1.1);
+  transition: transform 0.1s ease, background 0.1s ease;
+}
+/* ================================
+МОДАЛКА ВЫХОДА
+================================ */
+
+.logout-confirm-modal {
+  position: fixed;
+  inset: 0;
+  background: var(--overlay);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease;
+  z-index: 270; /* Выше, чем у других модалок */
+}
+
+.logout-confirm-modal.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.logout-confirm-modal .confirm-modal-content {
+  transform: scale(0.96);
+  transition: transform 0.18s ease;
+}
+
+.logout-confirm-modal.open .confirm-modal-content {
+  transform: scale(1);
+}
+/* ================================
+ИСПРАВЛЕНИЕ ДЛЯ МОБИЛЬНЫХ ТЕЛЕФОНОВ
+================================ */
+
+@media (max-width: 600px) {
+  body {
+    align-items: stretch; /* Растягиваем на всю высоту */
+  }
+
+  .app {
+    width: 100vw;
+    height: 100dvh; /* 100dvh лучше учитывает панели браузера (адресную строку) */
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
+  }
+}
