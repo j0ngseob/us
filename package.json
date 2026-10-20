@@ -1,0 +1,19 @@
+{
+  "name": "us-messenger",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+  "start": "node server.js"
+},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "better-sqlite3": "^13.0.3",
+    "express": "^5.2.1",
+    "multer": "^2.4.0",
+    "ws": "^8.22.0"
+  }
+}
